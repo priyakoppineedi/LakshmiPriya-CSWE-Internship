@@ -92,8 +92,3 @@ A screenshot of the running dashboard is included in the submission.
 ![Drone Telemetry Dashboard Screenshot1](https://github.com/priyakoppineedi/LakshmiPriya-CSWE-Internship/blob/main/LakshmiPriya_CSWE_Internship/output%202.png)
 ![Drone Telemetry Dashboard Screenshot2](https://github.com/priyakoppineedi/LakshmiPriya-CSWE-Internship/blob/main/LakshmiPriya_CSWE_Internship/output%201.png)
 ---
-
-## 👩‍💻 Submission
-
-This project is submitted as part of the CSWE Software Internship task requirement.
-
