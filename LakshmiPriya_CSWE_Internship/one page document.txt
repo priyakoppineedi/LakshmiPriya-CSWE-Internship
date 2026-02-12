@@ -30,7 +30,7 @@ Tools / Technologies Used:
 -> Runs entirely in a web browser with no backend dependency
 
 Purpose of the Project:
--> Demonstrates understanding of telemetry monitoring systems
--> Showcases real-time data simulation and visualization
--> Highlights dynamic UI updates and system state transitions
--> Reflects front-end development capability, logical thinking, and problem-solving skills
+-> To simulate a real-world drone telemetry monitoring environment that provides continuous visibility into critical flight parameters
+-> To model how ground control systems track altitude, speed, battery levels, and location in real time for operational awareness
+-> To demonstrate how dynamic telemetry data can be processed, updated, and visualized in a structured dashboard interface
+-> To represent a simplified mission lifecycle, including takeoff, active flight monitoring, and mission completion, within a controlled simulation environment
