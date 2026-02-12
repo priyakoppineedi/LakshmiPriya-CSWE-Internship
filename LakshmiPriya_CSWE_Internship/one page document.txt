@@ -28,6 +28,3 @@ Purpose of the Project:
 -> Dynamic UI updates and system status monitoring
 -> Showcases front-end development, logical thinking, and problem-solving skills
 
-Submitted for: CSWE Intern (Software) – Internship Screening Task
-
-
