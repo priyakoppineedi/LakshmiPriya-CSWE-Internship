@@ -89,8 +89,8 @@ The system generates a professional telemetry dashboard with:
 
 A screenshot of the running dashboard is included in the submission.
 
-![Drone Telemetry Dashboard Screenshot1](https://github.com/priyakoppineedi/LakshmiPriya-CSWE-Internship/blob/main/screenshot1)
-![Drone Telemetry Dashboard Screenshot2](https://github.com/priyakoppineedi/LakshmiPriya-CSWE-Internship/blob/main/screenshot2)
+![Drone Telemetry Dashboard Screenshot1](https://github.com/priyakoppineedi/LakshmiPriya-CSWE-Internship/blob/main/LakshmiPriya_CSWE_Internship/output%202.png)
+![Drone Telemetry Dashboard Screenshot2](https://github.com/priyakoppineedi/LakshmiPriya-CSWE-Internship/blob/main/LakshmiPriya_CSWE_Internship/output%201.png)
 ---
 
 ## 👩‍💻 Submission
