@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drone Telemetry System</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #0b1120;
+            color: white;
+        }
+
+        header {
+            background: #111827;
+            padding: 15px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 250px 1fr 250px;
+            height: 90vh;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .panel {
+            background: #1f2937;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .block {
+            background: #111827;
+            padding: 10px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        .block2 {
+            background: #111827;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        .block h3 {
+            margin: 0;
+            font-size: 14px;
+            color: #38bdf8;
+        }
+
+        .value {
+            font-size: 18px;
+            margin-top: 5px;
+        }
+
+        .battery-bar {
+            height: 20px;
+            background: #374151;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .battery-fill {
+            height: 100%;
+            width: 100%;
+            background: #22c55e;
+            transition: width 1s;
+        }
+        .chart-container {
+            display: flex;
+            flex-direction: column; 
+            gap: 15px;
+        }
+
+
+        .charts-row {
+            display: flex;
+            gap: 15px;
+        }
+
+
+        .chart-box {
+            flex: 1;
+            background: #111827;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .chart-box canvas {
+            width: 100% !important;
+            height: 300px !important;
+        }
+
+        .system-panel {
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        
+        .stats{
+            grid-column: span 2;
+            
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+
+        }
+
+        .sys-box {
+            background: #111827;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .sys-box h4 {
+            margin: 0 0 5px 0;
+            color: #38bdf8;
+            font-size: 13px;
+        }
+
+        .warning-box {
+            grid-column: span 2;
+        }
+
+
+
+        .log-box {
+            
+            grid-column: span 1;
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 8px;
+            overflow-y: auto;
+            font-size: 14px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<header>DRONE TELEMETRY SYSTEM</header>
+
+<div class="dashboard">
+
+    <!-- LEFT PANEL -->
+    <div class="panel">
+
+        <div class="block">
+            <h3>Battery</h3>
+            <div class="value" id="batteryText">100%</div>
+            <div class="battery-bar">
+                <div class="battery-fill" id="batteryFill"></div>
+            </div>
+        </div>
+
+        <div class="block">
+            <h3>Flight Status</h3>
+            <div class="value" id="status">Initializing</div>
+        </div>
+
+        
+        <div class="block">
+            <h3>Mission Time</h3>
+            <div class="value" id="time">0 sec</div>
+        </div>
+
+        <div class="block">
+            <h3>Distance Travelled</h3>
+            <div class="value" id="distance">0 m</div>
+        </div>
+        <div class="block">
+            <h3>GPS Coordinates</h3>
+            <div class="value" id="gps"> Latitude : 0 <br> Longitude : 0</div>
+        </div>
+
+
+    </div>
+
+    <!-- CENTER PANEL -->
+    <div class="panel chart-container">
+
+        <!-- TOP ROW (Charts side by side) -->
+        <div class="charts-row">
+            <div class="chart-box">
+                <canvas id="altitudeChart"></canvas>
+            </div>
+            <div class="chart-box">
+                <canvas id="speedChart"></canvas>
+            </div>
+        </div>
+
+        <!-- BOTTOM (System Stats) -->
+        <div class="system-panel">
+            <div class="stats">
+                <div class="sys-box warning-box">
+                    <h4>System Status</h4>
+                    <div id="warning">All Systems Normal</div>
+                </div>
+
+                <div class="sys-box">
+                    <h4>Signal Strength</h4>
+                    <div id="signal">Strong</div>
+                </div>
+
+                <div class="sys-box">
+                    <h4>Motor Temp</h4>
+                    <div id="temp">40°C</div>
+                </div>
+
+                <div class="sys-box">
+                    <h4>Heading</h4>
+                    <div id="heading">0°</div>
+                </div>
+
+                <div class="sys-box">
+                    <h4>Satellites</h4>
+                    <div id="sat">12</div>
+                </div>
+
+                <div class="sys-box">
+                    <h4>CPU Load</h4>
+                    <div id="cpu">30%</div>
+                </div>
+            </div>
+
+
+            <div class="log-box">
+                <h4>Flight Log</h4>
+                <div id="log"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- RIGHT PANEL -->
+    <div class="panel">
+
+        <div class="block2">
+            <h3>Altitude</h3>
+            <div class="value" id="altitude">0 m</div>
+            <canvas id="altitudeGauge" height="120"></canvas>
+        </div>
+
+        <div class="block2">
+            <h3>Speed</h3>
+            <div class="value" id="speed">0 m/s</div>
+            <canvas id="speedGauge" height="120"></canvas>
+        </div>
+
+
+
+    </div>
+
+
+</div>
+
+<script>
+
+let altitude = 0;
+let battery = 100;
+let latitude = 17.3850;
+let longitude = 78.4867;
+let distance = 0;
+let seconds = 0;
+
+const altitudeCtx = document.getElementById('altitudeChart');
+const speedCtx = document.getElementById('speedChart');
+
+const altitudeChart = new Chart(altitudeCtx, {
+    type: 'line',
+    data: {
+        labels: [],
+        datasets: [{
+            label: 'Altitude (m)',
+            data: [],
+            borderColor: '#38bdf8',
+            tension: 0.3
+        }]
+    }
+});
+
+const speedChart = new Chart(speedCtx, {
+    type: 'line',
+    data: {
+        labels: [],
+        datasets: [{
+            label: 'Speed (m/s)',
+            data: [],
+            borderColor: '#f97316',
+            tension: 0.3
+        }]
+    }
+});
+
+// ALTITUDE GAUGE
+const altitudeGauge = new Chart(
+    document.getElementById("altitudeGauge"),
+    {
+        type: "doughnut",
+        data: {
+            datasets: [{
+                data: [0, 100],
+                backgroundColor: ["#38bdf8", "#1f2937"],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            rotation: -90,
+            circumference: 180,
+            plugins: { legend: { display: false } },
+            cutout: "70%"
+        }
+    }
+);
+
+// SPEED GAUGE
+const speedGauge = new Chart(
+    document.getElementById("speedGauge"),
+    {
+        type: "doughnut",
+        data: {
+            datasets: [{
+                data: [0, 50],
+                backgroundColor: ["#f97316", "#1f2937"],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            rotation: -90,
+            circumference: 180,
+            plugins: { legend: { display: false } },
+            cutout: "70%"
+        }
+    }
+);
+
+
+const interval = setInterval(() => {
+
+    seconds++;
+    let speed = Math.random() * 10 + 5;
+
+    altitude += Math.random() * 4;
+    battery -= Math.random() * 1.2;
+    latitude += Math.random() * 0.0003;
+    longitude += Math.random() * 0.0003;
+    distance += speed;
+
+    // Update Altitude Gauge (max 100m scale)
+    let altitudePercent = Math.min((altitude / 100) * 100, 100);
+    altitudeGauge.data.datasets[0].data = [altitudePercent, 100 - altitudePercent];
+    altitudeGauge.update();
+
+    // Update Speed Gauge (max 20 m/s scale)
+    let speedPercent = Math.min((speed / 20) * 100, 100);
+    speedGauge.data.datasets[0].data = [speedPercent, 100 - speedPercent];
+    speedGauge.update();
+
+
+
+    // Simulated telemetry
+    let temp = 35 + Math.random() * 15;
+    let heading = Math.floor(Math.random() * 360);
+    let satellites = 10 + Math.floor(Math.random() * 5);
+    let cpu = 20 + Math.random() * 50;
+
+    let signalStrength = "Strong";
+    if (battery < 30) signalStrength = "Medium";
+    if (battery < 15) signalStrength = "Weak";
+
+    let systemStatus = "All Systems Normal";
+    if (battery < 15) systemStatus = "Low Battery Warning";
+    if (temp > 48) systemStatus = "Motor Overheating";
+
+    // Update UI
+    document.getElementById("signal").innerText = signalStrength;
+    document.getElementById("temp").innerText = temp.toFixed(1) + "°C";
+    document.getElementById("heading").innerText = heading + "°";
+    document.getElementById("sat").innerText = satellites;
+    document.getElementById("cpu").innerText = cpu.toFixed(1) + "%";
+    document.getElementById("warning").innerText = systemStatus;
+
+    // Add log entry occasionally
+    if (seconds % 5 === 0) {
+        let log = document.getElementById("log");
+        log.innerHTML += "T+" + seconds + "s : Status - " + systemStatus + "<br>";
+        log.scrollTop = log.scrollHeight;
+    }
+
+
+
+    // Update text values
+    document.getElementById("altitude").innerText = altitude.toFixed(2) + " m";
+    document.getElementById("speed").innerText = speed.toFixed(2) + " m/s";
+    document.getElementById("distance").innerText = distance.toFixed(2) + " m";
+    document.getElementById("batteryText").innerText = battery.toFixed(1) + "%";
+    document.getElementById("batteryFill").style.width = battery + "%";
+    document.getElementById("gps").innerText = "Latitude : "+
+        latitude.toFixed(6) + "\n " + "Longitude : "+ longitude.toFixed(6);
+    document.getElementById("time").innerText = seconds + " sec";
+
+    let status = "Cruising";
+    if (seconds < 5) status = "Taking Off";
+    else if (battery < 15) status = "Returning Home";
+    else if (seconds >= 30) status = "Mission Completed";
+
+    document.getElementById("status").innerText = status;
+
+    // Update charts
+    altitudeChart.data.labels.push(seconds);
+    altitudeChart.data.datasets[0].data.push(altitude.toFixed(2));
+    altitudeChart.update();
+
+    speedChart.data.labels.push(seconds);
+    speedChart.data.datasets[0].data.push(speed.toFixed(2));
+    speedChart.update();
+
+    if (seconds >= 30) {
+        clearInterval(interval);
+    }
+
+}, 1000);
+
+</script>
+
+</body>
+</html>
