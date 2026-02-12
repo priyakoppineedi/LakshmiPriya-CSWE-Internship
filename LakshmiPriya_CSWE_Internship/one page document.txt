@@ -1,0 +1,36 @@
+Project Title: Drone Telemetry System (Telemetry Window)
+
+Project Overview:
+-> Developed a simulated Drone Telemetry Dashboard that replicates a professional drone monitoring interface
+-> Displays real-time flight telemetry data for a 30-second mission simulation
+-> Updates values every 1 second to simulate live drone behavior
+
+What I Built:
+-> Designed and implemented a web-based telemetry window
+-> Displayed key flight parameters: Altitude, Speed, Battery Percentage, and GPS Coordinates
+-> Structured the interface using organized panels, charts, gauges, and status indicators
+-> Created a professional dashboard layout similar to real-world drone ground control systems
+
+How It Works:
+-> Uses a JavaScript timed loop to generate telemetry values every 1 second
+-> Altitude gradually increases to simulate takeoff and flight progression
+-> Speed varies within a realistic operational range
+-> Battery percentage decreases progressively to simulate power consumption
+-> GPS coordinates change slightly to represent drone movement
+-> Line charts visualize altitude and speed in real time
+-> Gauge indicators and battery progress bar enhance monitoring visibility
+-> Flight log records system updates dynamically
+-> Simulation automatically stops after 30 seconds to represent mission completion
+
+Tools / Technologies Used:
+-> HTML5 for structure and layout
+-> CSS3 for dashboard styling and responsive panel design
+-> JavaScript (ES6) for telemetry simulation logic and real-time updates
+-> Chart.js for data visualization including charts and gauges
+-> Runs entirely in a web browser with no backend dependency
+
+Purpose of the Project:
+-> Demonstrates understanding of telemetry monitoring systems
+-> Showcases real-time data simulation and visualization
+-> Highlights dynamic UI updates and system state transitions
+-> Reflects front-end development capability, logical thinking, and problem-solving skills
